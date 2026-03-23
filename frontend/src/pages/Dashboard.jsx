@@ -39,7 +39,12 @@ export default function Dashboard() {
       {/* Sidebar */}
       <div style={styles.sidebar}>
         <div style={styles.logo}>
-          🎀 CareerKit
+          <img
+            src="/src/assets/hellokitty.png"
+            alt="Hello Kitty"
+            style={{ width: 70, height: 70, objectFit: 'contain' }}
+          />
+          <span>CareerKit</span>
         </div>
         <div style={styles.divider} />
         {['all','applied','interview','offer','rejected'].map(s => (
@@ -123,7 +128,7 @@ export default function Dashboard() {
 const styles = {
   app: { display: 'flex', minHeight: '100vh', background: '#fff0f5', fontFamily: 'sans-serif' },
   sidebar: { width: 180, background: '#ff80ab', padding: '20px 12px', display: 'flex', flexDirection: 'column', gap: 6 },
-  logo: { fontSize: 16, fontWeight: 600, color: 'white', marginBottom: 12 },
+  logo: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, color: 'white', fontSize: 14, fontWeight: 600, marginBottom: 12 },
   divider: { height: 1, background: '#ffe0ed', marginBottom: 6 },
   navItem: { padding: '8px 12px', borderRadius: 20, fontSize: 12, color: '#ffe0ed', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
   navActive: { background: 'white', color: '#c2185b', fontWeight: 600 },
