@@ -1,8 +1,8 @@
-# CareerKit — AI Job Tracker
+CareerKit — AI Job Tracker
 
-A full-stack web application to track job applications, store resume versions, and use AI to score how well you match a job description.
+In this project I developed a full-stack web application to track job applications, store resume versions, and use AI to score how well you match a job description. I decided to do this project because I'm activitely looking for work as new grad student (May 2026). This will help assistent me in my job search journey :) 
 
-Built with Python (FastAPI) on the backend, React on the frontend, and PostgreSQL as the database. Features an AI Match tool powered by OpenAI GPT-4o.
+I built this program  with Python (FastAPI) on the backend, React on the frontend, and PostgreSQL as the database. Features an AI Match tool powered by OpenAI GPT-4o.
 
 ## Features
 
