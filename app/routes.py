@@ -5,10 +5,15 @@ from app.models import JobApplication
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from openai import OpenAI
+import os
+import json
+from app.services.analysis import analyze_job_applications
+from app.services.ai_service import generate_job_search_insight
 
 router = APIRouter()
 
-# job application submittion
+# Job application submission
 class JobCreate(BaseModel):
     company: str
     job_title: str
@@ -18,7 +23,7 @@ class JobCreate(BaseModel):
     notes: Optional[str] = None
     resume_submitted: Optional[str] = None
 
-# Job application return 
+# Job application return
 class JobResponse(BaseModel):
     id: int
     company: str
@@ -34,12 +39,12 @@ class JobResponse(BaseModel):
     class Config:
         from_attributes = True
 
-# GET all jobs 
+# GET all jobs
 @router.get("/jobs", response_model=list[JobResponse])
 def get_jobs(db: Session = Depends(get_db)):
     return db.query(JobApplication).all()
 
-# Get one job 
+# Get one job
 @router.get("/jobs/{job_id}", response_model=JobResponse)
 def get_job(job_id: int, db: Session = Depends(get_db)):
     job = db.query(JobApplication).filter(JobApplication.id == job_id).first()
@@ -47,7 +52,7 @@ def get_job(job_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Job not found")
     return job
 
-# ADD'S job
+# Add job
 @router.post("/jobs", response_model=JobResponse)
 def create_job(job: JobCreate, db: Session = Depends(get_db)):
     new_job = JobApplication(**job.dict())
@@ -56,7 +61,7 @@ def create_job(job: JobCreate, db: Session = Depends(get_db)):
     db.refresh(new_job)
     return new_job
 
-# Updating Job status 
+# Update job status
 @router.put("/jobs/{job_id}", response_model=JobResponse)
 def update_job(job_id: int, job: JobCreate, db: Session = Depends(get_db)):
     existing = db.query(JobApplication).filter(JobApplication.id == job_id).first()
@@ -68,7 +73,7 @@ def update_job(job_id: int, job: JobCreate, db: Session = Depends(get_db)):
     db.refresh(existing)
     return existing
 
-# Delete Job 
+# Delete job
 @router.delete("/jobs/{job_id}")
 def delete_job(job_id: int, db: Session = Depends(get_db)):
     job = db.query(JobApplication).filter(JobApplication.id == job_id).first()
@@ -77,9 +82,8 @@ def delete_job(job_id: int, db: Session = Depends(get_db)):
     db.delete(job)
     db.commit()
     return {"message": "Job deleted successfully"}
-from openai import OpenAI
-import os
 
+# AI match
 @router.post("/jobs/{job_id}/match")
 def ai_match(job_id: int, payload: dict, db: Session = Depends(get_db)):
     job = db.query(JobApplication).filter(JobApplication.id == job_id).first()
@@ -99,7 +103,7 @@ Job Title: {job.job_title}
 Company: {job.company}
 Job Description: {job_description}
 
-Candidate Skills: Python, FastAPI, Django, React, PostgreSQL, OpenAI API, 
+Candidate Skills: Python, FastAPI, Django, React, PostgreSQL, OpenAI API,
 GitHub Webhooks, REST APIs, Docker, AWS, Git, CI/CD, Agile
 
 Return a JSON object with:
@@ -117,6 +121,41 @@ Return a JSON object with:
         max_tokens=500,
     )
 
-    import json
     result = json.loads(response.choices[0].message.content)
     return result
+
+# Analytics summary
+@router.get("/analytics/summary")
+async def get_analytics_summary(db: Session = Depends(get_db)):
+    jobs = db.query(JobApplication).all()
+    records = [
+        {
+            "company":    job.company,
+            "status":     job.status,
+            "created_at": job.date_applied,
+            "match_score": getattr(job, 'match_score', None)
+        }
+        for job in jobs
+    ]
+    analysis = analyze_job_applications(records)
+    return analysis
+
+# AI insight report
+@router.post("/analytics/insight")
+async def get_ai_insight(db: Session = Depends(get_db)):
+    jobs = db.query(JobApplication).all()
+    records = [
+        {
+            "company":    job.company,
+            "status":     job.status,
+            "created_at": job.date_applied,
+            "match_score": getattr(job, 'match_score', None)
+        }
+        for job in jobs
+    ]
+    analysis = analyze_job_applications(records)
+    insight  = generate_job_search_insight(analysis)
+    return {
+        "analysis": analysis,
+        "insight":  insight
+    }
