@@ -2,7 +2,7 @@
 
 I built this because I needed it.
 
-As a May 2026 Computer Science graduate actively applying for jobs, I was losing track of everything — which companies I applied to, what version of my resume I sent, whether I ever heard back. Spreadsheets were not cutting it. So I built something better.
+I'll be graduating Computer Science May 0f 2026. Which I'm sure everyone knows I've been  actively applying for jobs. It's easy to lose track of everything such as what I applied to, what version of my resume I sent, and whether I ever heard back. Spreadsheets were easy in the beginning but alot of manual work. I personally didn't have time for. So I built something better.
 
 CareerKit is a full-stack job tracking platform with an AI resume matcher and a data analytics engine that actually coaches you on your job search. It is the tool I wish existed when I started applying.
 
