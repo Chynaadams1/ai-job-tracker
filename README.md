@@ -152,11 +152,11 @@ Requires an OpenAI API key with available credits.
 
 ## What I Learned
 
-I came into this project knowing Python and React at a surface level. I came out of it understanding how full-stack systems actually work — how a button click on a React frontend turns into a database write on a PostgreSQL backend, how CORS works and why it matters, how to integrate a third-party AI API securely, and how to use pandas to turn raw data into something meaningful.
+I came into this project knowing basics of Python and React at a surface level. I came out of it understanding how full-stack systems actually work. How a button click on a React frontend turns into a database write on a PostgreSQL backend, how CORS works and why it matters, how to integrate a third-party AI API securely, and how to use pandas to turn raw data into something meaningful.
 
-The analytics feature was the biggest stretch. I had never used pandas in a production context before. Building something that pulls real data, runs statistical analysis, and feeds it into an AI model to generate personalized advice — and then watching it actually work — was the moment this project went from a portfolio piece to something I genuinely use every day.
+The analytics feature was the biggest stretch. I had never used pandas in a production context before. Building something that pulls real data, runs statistical analysis, and feeds it into an AI model to generate personalized advice. Then using and  watching it actually work was the moment this project was something genuinely use every day. To keep me updated on new Jobs/ Future jobs. 
 
-Building this also taught me something I did not expect — that the best projects come from real problems. I was not building for a grade or a tutorial. I was building something I actually needed, which meant every decision had a reason behind it. That changes how you code.
+Building this also taught me something I did not expect. Which was the best projects come from real problems. I was not building for a grade or a tutorial. I was building something I actually needed. A project I could learn from and utilize. With that being said every decision had a reason behind it. I'm still a beginner and have alot to learn. 
 
 ---
 
